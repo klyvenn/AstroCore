@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Client, GatewayIntentBits, Collection, REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
+const express = require('express');
 
 const client = new Client({
     intents: [
@@ -10,6 +11,19 @@ const client = new Client({
         GatewayIntentBits.MessageContent
     ]
 });
+
+// ===== SERVEUR EXPRESS POUR RENDER =====
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('AstroCore Bot est en ligne !');
+});
+
+app.listen(PORT, () => {
+    console.log(`[Web] Serveur Express actif sur le port ${PORT}`);
+});
+// ===== FIN SERVEUR EXPRESS =====
 
 // Initialisation du Command Handler
 client.commands = new Collection();
